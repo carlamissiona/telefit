@@ -120,9 +120,9 @@ app.get('/logout', (req, res) => {
 app.get('/api/users', validateApiKey, async (req, res) => {
   // Using static data
   const sanitizedUsers = users.map(({ password, ...user }) => user);
-  res.json(sanitizedUsers);
+ // res.json(sanitizedUsers);
 
-   Using PostgreSQL (uncomment when ready to use database)
+  // Using PostgreSQL (uncomment when ready to use database)
   try {
     const result = await db.pool.query('SELECT id, email, type, created_at FROM users');
     res.json(result.rows);
