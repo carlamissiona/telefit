@@ -122,7 +122,7 @@ app.get('/api/users', validateApiKey, async (req, res) => {
   const sanitizedUsers = users.map(({ password, ...user }) => user);
   res.json(sanitizedUsers);
 
-  /* Using PostgreSQL (uncomment when ready to use database)
+   Using PostgreSQL (uncomment when ready to use database)
   try {
     const result = await db.pool.query('SELECT id, email, type, created_at FROM users');
     res.json(result.rows);
@@ -130,7 +130,7 @@ app.get('/api/users', validateApiKey, async (req, res) => {
     console.error('Database error:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
-  */
+  
 });
 
 // Get user by ID
