@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyms - Fitness App</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="dashboard-header">
+            <h1>Welcome, <%= user.email %></h1>
+            <span class="user-type"><%= user.type.charAt(0).toUpperCase() + user.type.slice(1) %></span>
+            <a href="/logout" class="btn logout-btn">Logout</a>
+        </header>
+        
+        <div class="gym-gallery">
+            <h2>Available Gyms</h2>
+            <div class="gym-grid">
+                <% gyms.forEach(gym => { %>
+                    <div class="gym-card">
+                        <img src="<%= gym.image %>" alt="<%= gym.name %>">
+                        <div class="gym-info">
+                            <h3><%= gym.name %></h3>
+                            <p><%= gym.description %></p>
+                            <p class="address"><%= gym.address %></p>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
