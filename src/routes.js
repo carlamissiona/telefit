@@ -1,7 +1,7 @@
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import { db } from './data/inMemoryDb.js';
-// import { queries } from './data/postgresDb.js';
+import { queries } from './data/postgresDb.js';
 import { isAuthenticated } from './middleware/auth.js';
 
 export const router = express.Router();
@@ -59,11 +59,13 @@ router.get('/dashboard/stores', isAuthenticated, (req, res) => {
   // res.render('stores', { stores });
 });
 
-router.get('/dashboard/gyms', isAuthenticated, (req, res) => {
-  res.render('gyms', { gyms: db.gyms });
+router.get('/dashboard/gyms', isAuthenticated, async (req, res) => {
+  // res.render('gyms', { gyms: db.gyms });
   // Postgres version:
-  // const gyms = await queries.getAllGyms();
-  // res.render('gyms', { gyms });
+  const gyms = await queries.getAllGyms();
+  console.log("gyms=>>>" , gyms);
+  res.render('gym_all', { gyms });
+
 });
 
 router.get('/dashboard/petshops', isAuthenticated, (req, res) => {
@@ -138,6 +140,88 @@ router.get('/dashboard/petshops/delete/:id', isAuthenticated, (req, res) => {
 });
 
 // Serve HTML pages
+router.get('/', (req, res) => {
+  res.render('index');
+});
+
+//edit acct
+router.get('/account/edit', (req, res) => {
+  res.render('edit_account');
+});
+
+router.get('/account', (req, res) => {
+  res.render('account');
+});
+
+router.get('/user_dashboard', (req, res) => {
+  res.render('user_home');
+});
+
+router.get('/user_subscriptions', (req, res) => {
+  res.render('user_subscription');
+});
+
+router.get('/gym_all', isAuthenticated,(req, res) => {
+  res.render('gym_all');
+});
+router.get('/gym_view', (req, res) => {
+  res.render('gym_view');
+});
+
+router.get('/gym_edit', (req, res) => {
+  res.render('gym_edit');
+});
+
+router.get('/gym_add', (req, res) => {
+  res.render('gym_add');
+});
+
+router.get('/trainer/all', (req, res) => {
+  res.render('trainer_all');
+});
+
+router.get('/trainer/add', (req, res) => {
+  res.render('trainer_add');
+});
+router.get('/trainer/view', (req, res) => {
+  res.render('trainer_view');
+});
+
+router.get('/program/all', (req, res) => {
+  res.render('program_all');
+});
+
+router.get('/program/view', (req, res) => {
+  res.render('program_view');
+});
+
+
+router.get('/program/add', (req, res) => {
+  res.render('program_add');
+});
+
+
+router.get('/program/edit', (req, res) => {
+  res.render('program_edit');
+});
+
+
+
+router.get('/subscription/all', (req, res) => {
+  res.render('subscription_all');
+});
+
+router.get('/subscription/view', (req, res) => {
+  res.render('subscription_view');
+});
+
+
+
+
+router.get('/', (req, res) => {
+  res.render('index');
+});
+
 router.get('/', (req, res) => {
   res.render('index');
 });

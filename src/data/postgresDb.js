@@ -2,7 +2,7 @@ import pg from 'pg';
 const { Pool } = pg;
 
 // Uncomment and configure these when ready to use Postgres
-/*
+
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -181,4 +181,3 @@ export const queries = {
 
 // Initialize schema when database connection is ready
 // setupSchema().catch(console.error);
-*/
