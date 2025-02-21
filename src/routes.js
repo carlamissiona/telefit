@@ -8,25 +8,27 @@ export const router = express.Router();
 
 // Auth routes
 router.post('/api/signup', async (req, res) => {
-  const { username, password, homeAddress } = req.body;
+  const { username, password, email, type ,  homeaddress } = req.body;
   
   // Check if user exists
   if (db.users.find(u => u.username === username)) {
     return res.status(400).json({ error: 'Username already exists' });
   }
+  // pg check username
 
   const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = {
     id: Date.now().toString(),
     username,
     password: hashedPassword,
-    homeAddress
+    homeaddress
   };
 
   db.users.push(newUser);
   
   // Postgres version:
-  // const newUser = await queries.createUser(username, hashedPassword, homeAddress);
+  const newuser = await queries.createUser(username, hashedPassword, email, type , homeaddress);
+  // createUser(username, hashedPassword, email , type , homeaddress) 
   
   res.cookie('userId', newUser.id);
   res.redirect('/dashboard/stores');

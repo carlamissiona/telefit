@@ -12,6 +12,8 @@ const pool = new Pool({
 });
 
 // Schema setup
+// Note users gyms
+
 const setupSchema = async () => {
   await pool.query(`
     CREATE TABLE IF NOT EXISTS users (
@@ -51,15 +53,17 @@ const setupSchema = async () => {
       image TEXT,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
+     
+
   `);
 };
 
 export const queries = {
   // Users
-  async createUser(username, hashedPassword, homeAddress) {
+  async createUser(username, hashedPassword, email , type , homeaddress) {
     const result = await pool.query(
-      'INSERT INTO users (username, password, home_address) VALUES ($1, $2, $3) RETURNING *',
-      [username, hashedPassword, homeAddress]
+      'INSERT INTO users (username, password, email , type , homeaddress) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [username, hashedPassword,  email, type, homeaddress]
     );
     return result.rows[0];
   },
@@ -74,10 +78,10 @@ export const queries = {
     return result.rows[0];
   },
 
-  async updateUser(id, username, hashedPassword, homeAddress) {
+  async updateUser(id, username, hashedPassword,  email, type, homeaddress) {
     const result = await pool.query(
-      'UPDATE users SET username = $2, password = $3, home_address = $4 WHERE id = $1 RETURNING *',
-      [id, username, hashedPassword, homeAddress]
+      'UPDATE users SET username = $2, password = $3, email = $4 , type=$5, homeaddress=$6 WHERE id = $1 RETURNING *',
+      [id, username, hashedPassword, email, type, homeaddress ]
     );
     return result.rows[0];
   },
@@ -125,18 +129,18 @@ export const queries = {
     return result.rows[0];
   },
 
-  async createGym(name, description, city, tagline, image) {
+  async createGym(name, description, address, image) {
     const result = await pool.query(
-      'INSERT INTO gyms (name, description, city, tagline, image) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [name, description, city, tagline, image]
+      'INSERT INTO gyms (name, description, address, image) VALUES ($1, $2, $3, $4) RETURNING *',
+      [name, description, address , image]
     );
     return result.rows[0];
   },
 
-  async updateGym(id, name, description, city, tagline, image) {
+  async updateGym(id, name, description, address, image) {
     const result = await pool.query(
       'UPDATE gyms SET name = $2, description = $3, city = $4, tagline = $5, image = $6 WHERE id = $1 RETURNING *',
-      [id, name, description, city, tagline, image]
+      [id, name, description, address, image]
     );
     return result.rows[0];
   },
