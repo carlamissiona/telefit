@@ -63,7 +63,7 @@ router.get('/dashboard/gyms', isAuthenticated, async (req, res) => {
   // res.render('gyms', { gyms: db.gyms });
   // Postgres version:
   const gyms = await queries.getAllGyms();
-  console.log("gyms=>>>" , gyms);
+  console.log("gyms===>>>" , gyms);
   res.render('gym_all', { gyms });
 
 });

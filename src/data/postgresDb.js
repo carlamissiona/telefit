@@ -180,4 +180,4 @@ export const queries = {
 };
 
 // Initialize schema when database connection is ready
-// setupSchema().catch(console.error);
+setupSchema().catch(console.error);
