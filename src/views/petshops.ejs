@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Shops</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="/dashboard/stores" class="btn">Stores</a>
+            <a href="/dashboard/gyms" class="btn">Gyms</a>
+            <a href="/dashboard/petshops" class="btn">Pet Shops</a>
+            <a href="/logout" class="btn">Logout</a>
+        </nav>
+
+        <h1>Pet Shops</h1>
+        
+        <div class="add-form">
+            <h2>Add New Pet Shop</h2>
+            <form action="/dashboard/petshops/create" method="POST">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" name="description" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">City:</label>
+                    <input type="text" id="city" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="tagline">Tagline:</label>
+                    <input type="text" id="tagline" name="tagline" required>
+                </div>
+                <div class="form-group">
+                    <label for="image">Image URL:</label>
+                    <input type="text" id="image" name="image" required>
+                </div>
+                <button type="submit" class="btn">Add Pet Shop</button>
+            </form>
+        </div>
+
+        <div class="petshops-list">
+            <% petshops.forEach(petshop => { %>
+                <div class="card">
+                    <img src="<%= petshop.image %>" alt="<%= petshop.name %>">
+                    <h3><%= petshop.name %></h3>
+                    <p><%= petshop.description %></p>
+                    <p>City: <%= petshop.city %></p>
+                    <p>Tagline: <%= petshop.tagline %></p>
+                    
+                    <form action="/dashboard/petshops/edit/<%= petshop.id %>" method="POST">
+                        <input type="text" name="name" value="<%= petshop.name %>" required>
+                        <input type="text" name="description" value="<%= petshop.description %>" required>
+                        <input type="text" name="city" value="<%= petshop.city %>" required>
+                        <input type="text" name="tagline" value="<%= petshop.tagline %>" required>
+                        <input type="text" name="image" value="<%= petshop.image %>" required>
+                        <button type="submit" class="btn">Update</button>
+                    </form>
+                    
+                    <a href="/dashboard/petshops/delete/<%= petshop.id %>" class="btn" onclick="return confirm('Are you sure?')">Delete</a>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</body>
+</html>

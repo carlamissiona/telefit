@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <button onclick="showSection('stores')" class="btn">Stores</button>
+            <button onclick="showSection('gyms')" class="btn">Gyms</button>
+            <button onclick="showSection('petshops')" class="btn">Pet Shops</button>
+            <button onclick="logout()" class="btn">Logout</button>
+        </nav>
+
+        <div id="stores" class="section">
+            <h2>Stores</h2>
+            <div id="storesList"></div>
+            <button onclick="showAddForm('store')" class="btn">Add Store</button>
+        </div>
+
+        <div id="gyms" class="section" style="display:none">
+            <h2>Gyms</h2>
+            <div id="gymsList"></div>
+            <button onclick="showAddForm('gym')" class="btn">Add Gym</button>
+        </div>
+
+        <div id="petshops" class="section" style="display:none">
+            <h2>Pet Shops</h2>
+            <div id="petshopsList"></div>
+            <button onclick="showAddForm('petshop')" class="btn">Add Pet Shop</button>
+        </div>
+    </div>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>
