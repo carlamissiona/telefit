@@ -97,12 +97,10 @@
 
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="#hero" class="active">Home</a></li>
-            <li><a href="#about">About</a></li>
+            <li><a href="/" class="active">Home</a></li> 
             <li><a href="/login">Login</a></li>
-            <li><a href="/signup">Signup</a></li>
-            <li><a href="#team">See Gym List</a></li>
-            <li><a href="#contact">Contact Us</a></li>
+            <li><a href="/all-gyms">See Gym List</a></li>
+            <li><a href="#footer">Newsletter</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -123,7 +121,12 @@
           <div class="col-lg-7 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="zoom-out">
             <h1>Signup<span> For Membership </span></h1>
             <div class="col-md-9 order-2 order-lg-1 d-flex flex-column justify-content-center" >
-                <form action="/api/signup" method="POST">
+                
+                <br><br><form action="/api/signup" method="POST">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="text" id="email" class="form-control" name="email" required>
+                    </div>
                     <div class="form-group">
                         <label for="username">Username:</label>
                         <input type="text" id="username" class="form-control" name="username" required>
@@ -133,12 +136,16 @@
                         <input type="password" id="password" class="form-control" name="password" required>
                     </div>
                     <div class="form-group">
+                        <label for="cpassword">Confirm Password:</label>
+                        <input type="password" id="cpassword" class="form-control" name="cpassword" required>
+                    </div>
+                    <div class="form-group">
                         <label for="homeAddress">Home Address:</label>
                         <input type="text" id="homeAddress" class="form-control" name="homeAddress" required>
-                    </div>
-                    <button type="submit" class="btn">Sign Up</button>
+                    </div><br>
+                    <button type="submit" class="btn btn-sm btn-primary form-control">Sign Up</button>
                 </form>
-            <p>If You have An Account Already <a href="/login">Login</a></p>
+            <p><br>If You Have An Account Already - <a href="/login">Login Here</a></p>
             </div>
           </div>
         </div>
