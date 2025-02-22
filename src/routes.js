@@ -25,25 +25,32 @@ router.post('/api/signup', async (req, res) => {
   };
 
   db.users.push(newUser);
-  
-  // Postgres version:
-  const newuser = await queries.createUser(username, hashedPassword, email, type , homeaddress);
-  // createUser(username, hashedPassword, email , type , homeaddress) 
+  const user = await new Promise( (resolve, reject) => {
+    resolve( queries.getUserByEmail(email) );
+
+ });
+  const newuser = await new Promise( (resolve, reject) => { 
+    try{
+      resolve( queries.createUser(username, hashedPassword, email, type , homeaddress)  );
+    }catch(error){ 
+      console.log("error in db  creating user" , error );
+      reject(error);
+    }
+  });
   
   res.cookie('userId', newUser.id);
   res.redirect('/dashboard/stores');
 });
 
 router.post('/api/login', async (req, res) => {
-  const { username, password } = req.body;
-  const user = db.users.find(u => u.username === username);
-  const userps = await new Promise( (resolve, reject) => {
-     resolve( queries.getUserByUsername(username) );
+
+  const { email, password } = req.body;
+
+  const user = await new Promise( (resolve, reject) => {
+     resolve( queries.getUserByEmail(email) );
 
   });
-  
-  
-  
+    
   // const user = await new Promise((resolve, reject) => {
   //   fetchUser(userId, (err, user) => {
   //     if (err) {
@@ -56,18 +63,16 @@ router.post('/api/login', async (req, res) => {
   // });
 
   console.log("====userps====");
-  console.log(userps);
-  console.log(userps);
-  if (!user || !(await bcrypt.compare(password, userps.password))) {
+  console.log(user);
+
+  if (!user || !(await bcrypt.compare(password, user.password))) {
     console.log("invalid password userps");
   }
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    return res.status(401).json({ error: 'Invalid credentials' });
-  }
+ 
+  res.cookie('user', user.username);
+  res.cookie('apiKey', '88&uyT65!!@3'); /* hash of username plus timestamp then store in db */
+  res.redirect('/user_dashboard');
 
-  res.cookie('userId', user.id);
-  res.cookie('apiKey', '88&uyT65!!@3');
-  res.redirect('/dashboard/stores');
 });
 
 router.get('/logout', (req, res) => {
