@@ -25,10 +25,7 @@ router.post('/api/signup', async (req, res) => {
   };
 
   db.users.push(newUser);
-  const user = await new Promise( (resolve, reject) => {
-    resolve( queries.getUserByEmail(email) );
-
- });
+ 
   const newuser = await new Promise( (resolve, reject) => { 
     try{
       resolve( queries.createUser(username, hashedPassword, email, type , homeaddress)  );
