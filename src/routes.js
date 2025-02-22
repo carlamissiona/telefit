@@ -34,10 +34,15 @@ router.post('/api/signup', async (req, res) => {
       reject(error);
     }
   });
+  console.log("newuser");
+  console.log(newuser);
   
+  if(newuser == "Error"){ 
+    res.redirect('/signup');
+  }
   res.cookie('userId', newUser.id);
   res.redirect('/dashboard/stores');
-  
+
 });
 
 router.post('/api/login', async (req, res) => {

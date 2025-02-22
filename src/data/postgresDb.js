@@ -71,6 +71,16 @@ const setupSchema = async () => {
       userid INTEGER NOT NULL,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
+    CREATE TABLE IF NOT EXISTS programs (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      name character varying(100) NOT NULL,
+      description character varying(2000) NOT NULL, 
+      image character varying(1000) NOT NULL, 
+      gymid INTEGER NOT NULL,
+      trainerid INTEGER NOT NULL,
+      status character varying(100) NOT NULL, 
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    );
 
   `);
 };
@@ -82,7 +92,7 @@ export const queries = {
 
       const result = await pool.query(
         'INSERT INTO users (username, password, email , type , homeaddress) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-        [username, hashedPassword,  email, type, homeaddress]
+        [username, hashedPassword, email, type, homeaddress]
       );
       return result.rows[0];
 
