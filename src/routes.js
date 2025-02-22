@@ -37,8 +37,24 @@ router.post('/api/signup', async (req, res) => {
 router.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
   const user = db.users.find(u => u.username === username);
-  const userps = queries.getUserByUsername(username);
+  const userps = await new Promise( (resolveInclude, reject) => {
+     resolve( queries.getUserByUsername(username) );
+
+  });
   
+  
+  
+  // const user = await new Promise((resolve, reject) => {
+  //   fetchUser(userId, (err, user) => {
+  //     if (err) {
+  //       reject(err);
+  //       return;
+  //     }
+
+  //     resolve(user);
+  //   });
+  // });
+
   console.log("====userps====");
   console.log(userps);
   if (!user || !(await bcrypt.compare(password, user.password))) {
