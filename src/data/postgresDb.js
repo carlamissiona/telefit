@@ -60,8 +60,8 @@ const setupSchema = async () => {
       firstname character varying(60) NOT NULL,
       lastname character varying(60) NOT NULL,
       description character varying(255) NOT NULL,
-      image character varying(255) NOT NULL, 
-      userid  NOT NULL,
+      image character varying(500) NOT NULL, 
+      userid INTEGER NOT NULL,
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
 

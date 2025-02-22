@@ -37,6 +37,7 @@ router.post('/api/signup', async (req, res) => {
   
   res.cookie('userId', newUser.id);
   res.redirect('/dashboard/stores');
+  
 });
 
 router.post('/api/login', async (req, res) => {
