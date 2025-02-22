@@ -54,6 +54,15 @@ const setupSchema = async () => {
       created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
     );
      
+    CREATE TABLE IF NOT EXISTS trainers (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      firstname character varying(60) NOT NULL,
+      lastname character varying(60) NOT NULL,
+      description character varying(255) NOT NULL,
+      image character varying(255) NOT NULL, 
+      userid  NOT NULL,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    );
 
   `);
 };
