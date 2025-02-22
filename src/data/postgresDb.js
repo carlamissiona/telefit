@@ -15,56 +15,57 @@ const pool = new Pool({
 // Note users gyms
 
 const setupSchema = async () => {
-  await pool.query(`
-    CREATE TABLE IF NOT EXISTS users (
-      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-      username TEXT UNIQUE NOT NULL,
-      password TEXT NOT NULL,
-      home_address TEXT NOT NULL,
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-    );
+  
+  // await pool.query(`
+  //   CREATE TABLE IF NOT EXISTS users (
+  //     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  //     username TEXT UNIQUE NOT NULL,
+  //     password TEXT NOT NULL,
+  //     home_address TEXT NOT NULL,
+  //     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  //   );
 
-    CREATE TABLE IF NOT EXISTS stores (
-      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-      name TEXT NOT NULL,
-      description TEXT,
-      city TEXT NOT NULL,
-      tagline TEXT,
-      image TEXT,
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-    );
+  //   CREATE TABLE IF NOT EXISTS stores (
+  //     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  //     name TEXT NOT NULL,
+  //     description TEXT,
+  //     city TEXT NOT NULL,
+  //     tagline TEXT,
+  //     image TEXT,
+  //     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  //   );
 
-    CREATE TABLE IF NOT EXISTS gyms (
-      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-      name TEXT NOT NULL,
-      description TEXT,
-      city TEXT NOT NULL,
-      tagline TEXT,
-      image TEXT,
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-    );
+  //   CREATE TABLE IF NOT EXISTS gyms (
+  //     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  //     name TEXT NOT NULL,
+  //     description TEXT,
+  //     city TEXT NOT NULL,
+  //     tagline TEXT,
+  //     image TEXT,
+  //     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  //   );
 
-    CREATE TABLE IF NOT EXISTS petshops (
-      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-      name TEXT NOT NULL,
-      description TEXT,
-      city TEXT NOT NULL,
-      tagline TEXT,
-      image TEXT,
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-    );
+  //   CREATE TABLE IF NOT EXISTS petshops (
+  //     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  //     name TEXT NOT NULL,
+  //     description TEXT,
+  //     city TEXT NOT NULL,
+  //     tagline TEXT,
+  //     image TEXT,
+  //     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  //   );
      
-    CREATE TABLE IF NOT EXISTS trainers (
-      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-      firstname character varying(60) NOT NULL,
-      lastname character varying(60) NOT NULL,
-      description character varying(255) NOT NULL,
-      image character varying(255) NOT NULL, 
-      userid  NOT NULL,
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-    );
+  //   CREATE TABLE IF NOT EXISTS trainers (
+  //     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  //     firstname character varying(60) NOT NULL,
+  //     lastname character varying(60) NOT NULL,
+  //     description character varying(255) NOT NULL,
+  //     image character varying(255) NOT NULL, 
+  //     userid  NOT NULL,
+  //     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+  //   );
 
-  `);
+  // `);
 };
 
 export const queries = {
