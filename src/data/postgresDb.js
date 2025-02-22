@@ -11,6 +11,13 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
+// const pool = new Pool({
+//   user: "admin",
+//   host: "dpg-cugqr723esus73fg1egg-a.oregon-postgres.render.com",
+//   database: "telefitdb",
+//   password: "yaHa2t9CtHNJBS1jKhn2Mzke5Jvca3PM",
+//   port: "5432",
+// });
 // Schema setup
 // Note users gyms
 
@@ -71,11 +78,20 @@ const setupSchema = async () => {
 export const queries = {
   // Users
   async createUser(username, hashedPassword, email , type , homeaddress) {
-    const result = await pool.query(
-      'INSERT INTO users (username, password, email , type , homeaddress) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-      [username, hashedPassword,  email, type, homeaddress]
-    );
-    return result.rows[0];
+    try {
+
+      const result = await pool.query(
+        'INSERT INTO users (username, password, email , type , homeaddress) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+        [username, hashedPassword,  email, type, homeaddress]
+      );
+      return result.rows[0];
+
+    } catch (e) {
+      console.error('Error Occurred', e);
+      return "Error"
+       
+    }
+    
   },
 
   async getUserById(id) {
