@@ -37,7 +37,7 @@ router.post('/api/signup', async (req, res) => {
 router.post('/api/login', async (req, res) => {
   const { username, password } = req.body;
   const user = db.users.find(u => u.username === username);
-  const userps = await new Promise( (resolveInclude, reject) => {
+  const userps = await new Promise( (resolve, reject) => {
      resolve( queries.getUserByUsername(username) );
 
   });
