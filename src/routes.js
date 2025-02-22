@@ -37,49 +37,44 @@ router.post('/api/signup', async (req, res) => {
   console.log("newuser");
   console.log(newuser);
   
-  if(newuser == "Error"){ 
-    res.redirect('/signup');
-  }
-  res.cookie('userId', newUser.id);
-  res.redirect('/dashboard/stores');
+  if(newuser == "Duplicate Email"){  
+    res.redirect('/signup?Msg=EmailNotUnique');    
+  }else{
+    res.cookie('userId', newUser.id);
+    res.redirect('/dashboard/stores');
 
+  }
+  
 });
 
 router.post('/api/login', async (req, res) => {
 
   const { email, password } = req.body;
-
   const user = await new Promise( (resolve, reject) => {
      resolve( queries.getUserByEmail(email) );
-
   });
     
-  // const user = await new Promise((resolve, reject) => {
-  //   fetchUser(userId, (err, user) => {
-  //     if (err) {
-  //       reject(err);
-  //       return;
-  //     }
-
-  //     resolve(user);
-  //   });
-  // });
-
   console.log("====userps====");
   console.log(user);
 
   if (!user || !(await bcrypt.compare(password, user.password))) {
-    console.log("invalid password userps");
+
+    console.log("invalid password userps!!");
+    res.redirect('/login?Msg=WrongPassword');
+
+  } else {
+
+    res.cookie('user', user.username);
+    res.cookie('apiKey', '88&uyT65!!@3'); /* hash of username plus timestamp then store in db */
+    return res.redirect('/user_dashboard');
+
   }
  
-  res.cookie('user', user.username);
-  res.cookie('apiKey', '88&uyT65!!@3'); /* hash of username plus timestamp then store in db */
-  res.redirect('/user_dashboard');
 
 });
 
 router.get('/logout', (req, res) => {
-  res.clearCookie('userId');
+  res.clearCookie('user');
   res.clearCookie('apiKey');
   res.redirect('/login');
 });

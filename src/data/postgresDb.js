@@ -3,21 +3,24 @@ const { Pool } = pg;
 
 // Uncomment and configure these when ready to use Postgres
 
-const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
-});
-
 // const pool = new Pool({
-//   user: "admin",
-//   host: "dpg-cugqr723esus73fg1egg-a.oregon-postgres.render.com",
-//   database: "telefitdb",
-//   password: "yaHa2t9CtHNJBS1jKhn2Mzke5Jvca3PM",
-//   port: "5432",
+//   user: process.env.DB_USER,
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_NAME,
+//   password: process.env.DB_PASSWORD,
+//   port: process.env.DB_PORT,
 // });
+
+const pool = new Pool({
+  user: "admin",
+  host: "dpg-cugqr723esus73fg1egg-a.oregon-postgres.render.com",
+  database: "telefitdb",
+  password: "yaHa2t9CtHNJBS1jKhn2Mzke5Jvca3PM",
+  port: 5432,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
 // Schema setup
 // Note users gyms
 
@@ -96,7 +99,10 @@ export const queries = {
       );
       return result.rows[0];
 
-    } catch (e) {
+    } catch (e) { 
+      if(true == e.includes('duplicate key value violates unique constraint') && e.includes('users_email_key')){
+           return "Duplicate Email";
+      }
       console.error('Error Occurred', e);
       return "Error"
        
@@ -111,6 +117,12 @@ export const queries = {
 
   async getUserByUsername(username) {
     const result = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+    return result.rows[0];
+  },
+
+
+  async getUserByEmail(email) {
+    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
     return result.rows[0];
   },
 
