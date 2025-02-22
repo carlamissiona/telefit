@@ -16,12 +16,16 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         });
 
         if (response.ok) {
-            window.location.href = '/dashboard';
+            window.location.href = '/user_dashboard';
         } else {
             const data = await response.json();
             alert(data.error || 'Login failed');
+            console.log("json"); 
+            console.log(data);
         }
     } catch (error) {
         alert('An error occurred during login');
+        console.log("error response");
+        console.log(response.json());
     }
 });

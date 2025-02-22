@@ -3,7 +3,9 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
     
     const formData = {
         username: document.getElementById('username').value,
+        email: document.getElementById('email').value,
         password: document.getElementById('password').value,
+        type: document.getElementById('type').value,
         homeAddress: document.getElementById('homeAddress').value
     };
 
@@ -17,7 +19,7 @@ document.getElementById('signupForm').addEventListener('submit', async (e) => {
         });
 
         if (response.ok) {
-            window.location.href = '/dashboard';
+            window.location.href = '/user_dashboard';
         } else {
             const data = await response.json();
             alert(data.error || 'Signup failed');

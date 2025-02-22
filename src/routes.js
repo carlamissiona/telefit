@@ -9,47 +9,41 @@ export const router = express.Router();
 // Auth routes
 router.post('/api/signup', async (req, res) => {
   const { username, password, email, type ,  homeaddress } = req.body;
-  
+  console.log(req.body);
   // Check if user exists
-  if (db.users.find(u => u.username === username)) {
-    return res.status(400).json({ error: 'Username already exists' });
-  }
-  // pg check username
-
+  
   const hashedPassword = await bcrypt.hash(password, 10);
-  const newUser = {
-    id: Date.now().toString(),
-    username,
-    password: hashedPassword,
-    homeaddress
-  };
-
-  db.users.push(newUser);
- 
   const newuser = await new Promise( (resolve, reject) => { 
     try{
       resolve( queries.createUser(username, hashedPassword, email, type , homeaddress)  );
+
     }catch(error){ 
       console.log("error in db  creating user" , error );
       reject(error);
     }
   });
+
   console.log("newuser");
   console.log(newuser);
   
   if(newuser == "Duplicate Email"){  
-    res.redirect('/signup?Msg=EmailNotUnique');    
-  }else{
-    res.cookie('userId', newUser.id);
-    res.redirect('/dashboard/stores');
+    
+      res.status(400).json({ error: 'Email already exists' });
+  
+  } else {
+ 
+      res.status(200);
+      res.cookie('user', newuser.username);
+      res.redirect('/user_dashboard');
 
-  }
+  } 
   
 });
 
 router.post('/api/login', async (req, res) => {
 
   const { email, password } = req.body;
+  
   const user = await new Promise( (resolve, reject) => {
      resolve( queries.getUserByEmail(email) );
   });
@@ -58,15 +52,14 @@ router.post('/api/login', async (req, res) => {
   console.log(user);
 
   if (!user || !(await bcrypt.compare(password, user.password))) {
-
-    console.log("invalid password userps!!");
-    res.redirect('/login?Msg=WrongPassword');
+ 
+    res.status(400).json({status: 400, message: "Wrong credentials"});
 
   } else {
 
     res.cookie('user', user.username);
     res.cookie('apiKey', '88&uyT65!!@3'); /* hash of username plus timestamp then store in db */
-    return res.redirect('/user_dashboard');
+    res.status(200).json({status: 200, message: "Redirect Ok"});
 
   }
  

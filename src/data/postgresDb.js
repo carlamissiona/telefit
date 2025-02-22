@@ -100,11 +100,16 @@ export const queries = {
       return result.rows[0];
 
     } catch (e) { 
-      if(true == e.includes('duplicate key value violates unique constraint') && e.includes('users_email_key')){
+      console.log(typeof e);
+      console.log(e.toString());
+      console.log("typeof e");
+      if(true == (e.toString()).includes('duplicate key value violates unique constraint') && (e.toString()).includes('users_email_key')){
            return "Duplicate Email";
+      }else{
+        console.error('Error Occurred', e);
+        return "Error"
+      
       }
-      console.error('Error Occurred', e);
-      return "Error"
        
     }
     
