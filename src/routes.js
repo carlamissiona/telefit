@@ -59,7 +59,7 @@ router.post('/api/login', async (req, res) => {
   console.log(userps);
   console.log(userps);
   if (!user || !(await bcrypt.compare(password, userps.password))) {
-    console.login("invalid password userps");
+    console.log("invalid password userps");
   }
   if (!user || !(await bcrypt.compare(password, user.password))) {
     return res.status(401).json({ error: 'Invalid credentials' });
